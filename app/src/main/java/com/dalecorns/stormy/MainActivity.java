@@ -84,7 +84,9 @@ Log.d(TAG, "Main ui code is running");
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
         currentWeather.setTime(currently.getLong("time"));
+        currentWeather.setTimeZone(timezone);
         Log.i(TAG, "From JSON: " + timezone);
+        Log.d(TAG, currentWeather.getFormattedTime());
         return currentWeather;
     }
 
