@@ -72,7 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/temperatureLabel"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:id="@+id/LinearLayout">
 
         <LinearLayout
             android:orientation="vertical"
@@ -82,38 +83,58 @@
             android:weightSum="100">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="HUMIDITY"
                 android:id="@+id/humidityLabel"
-                android:textColor="#80ffffff"/>
+                android:textColor="#80ffffff"
+                android:gravity="center_horizontal"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0.88"
                 android:id="@+id/humidityValue"
                 android:textColor="@android:color/white"
-                android:textSize="24sp"/>
+                android:textSize="24sp"
+                android:gravity="center_horizontal"/>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="50">
+            android:layout_weight="50"
+            android:weightSum="100">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/textView"/>
+                android:text="RAIN/SNOW"
+                android:id="@+id/precipLabel"
+                android:textColor="#80FFFFFF"
+                android:gravity="center_horizontal"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="New Text"
-                android:id="@+id/textView2"/>
+                android:text="100%"
+                android:id="@+id/precipValue"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:gravity="center_horizontal"/>
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Raining Cats and Dogs"
+        android:id="@+id/textView"
+        android:layout_below = "@+id/LinearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:gravity="center_horizontal"/>
 </RelativeLayout>
