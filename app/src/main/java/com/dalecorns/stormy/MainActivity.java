@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,14 +33,19 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
     private CurrentWeather mCurrentWeather;
     private TextView mTemperatureLabel;
-
+    @Bind(R.id.timeLabel) TextView mTimeLabel;
+    @Bind(R.id.locationLabel) TextView mLocationLabel;
+    @Bind(R.id.humidityLabel) TextView mHumidityLabel;
+    @Bind(R.id.precipLabel) TextView mPrecipLabel;
+    @Bind(R.id.summaryLabel) TextView mSummaryLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        //Butterknife eliminates the need for the following line as well as its declaration above.
         mTemperatureLabel = (TextView)findViewById(R.id.temperatureLabel);
-
         String forecastKey = "0c2bd6d3dc5bab9f34330cb6e36dce22";
         double latitude = 37.8267;
         double longitude = -122.423;
