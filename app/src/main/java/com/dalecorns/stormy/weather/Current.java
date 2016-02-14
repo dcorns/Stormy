@@ -1,4 +1,6 @@
-package com.dalecorns.stormy;
+package com.dalecorns.stormy.weather;
+
+import com.dalecorns.stormy.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +9,7 @@ import java.util.TimeZone;
 /**
  * Created by dcorns on 2/12/16.
  */
-public class CurrentWeather {
+public class Current {
     private String mIcon;
     private long mTime;
     private double mTemperature;
