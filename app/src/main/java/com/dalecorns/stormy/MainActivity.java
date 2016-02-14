@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -34,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.humidityValue) TextView mHumidityValue;
     @Bind(R.id.precipValue) TextView mPrecipValue;
     @Bind(R.id.summaryLabel) TextView mSummaryLabel;
-    @Bind(R.id.iconImageView) ImageView mImageView;
+    @Bind(R.id.iconImageView) ImageView mIconImageView;
+    @Bind(R.id.refreshImageView) ImageView mRefreshView;
+//    @OnClick(R.id.refreshImageView) void refreshImageView(){
+//        updateDisplay();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +49,22 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Butterknife eliminates the need for the following line as well as its declaration above.
         mTemperatureLabel = (TextView)findViewById(R.id.temperatureLabel);
+
+        final double latitude = 37.8267;
+        final double longitude = -122.423;
+
+        mRefreshView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getForecast(latitude, longitude);
+            }
+        });
+        getForecast(latitude, longitude);
+Log.d(TAG, "Main ui code is running");
+    }
+
+    private void getForecast(double latitude, double longitude) {
         String forecastKey = "0c2bd6d3dc5bab9f34330cb6e36dce22";
-        double latitude = 37.8267;
-        double longitude = -122.423;
         String forecastUrl = "https://api.forecast.io/forecast/" + forecastKey + "/" + latitude +"," + longitude;
         if(isNetworkAvailable()) {
             OkHttpClient client = new OkHttpClient();
@@ -86,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         else{
             Toast.makeText(this, R.string.network_unavailable_message, Toast.LENGTH_LONG).show();
         }
-Log.d(TAG, "Main ui code is running");
     }
 
     private void updateDisplay() {
@@ -97,7 +115,7 @@ Log.d(TAG, "Main ui code is running");
         mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
         //Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId()); //getResources().getDrawable is depreciated.
         Drawable drawable = ContextCompat.getDrawable(this, mCurrentWeather.getIconId());
-        mImageView.setImageDrawable(drawable);
+        mIconImageView.setImageDrawable(drawable);
     }
 
     private CurrentWeather getCurrentDetails(String data) throws JSONException{
