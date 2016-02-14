@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.summaryLabel) TextView mSummaryLabel;
     @Bind(R.id.iconImageView) ImageView mIconImageView;
     @Bind(R.id.refreshImageView) ImageView mRefreshView;
+    @Bind(R.id.progressBar) ProgressBar mProgressBar;
 //    @OnClick(R.id.refreshImageView) void refreshImageView(){
 //        updateDisplay();
 //    }
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         //Butterknife eliminates the need for the following line as well as its declaration above.
         mTemperatureLabel = (TextView)findViewById(R.id.temperatureLabel);
-
+        mProgressBar.setVisibility(View.INVISIBLE);
         final double latitude = 37.8267;
         final double longitude = -122.423;
 
@@ -67,6 +69,7 @@ Log.d(TAG, "Main ui code is running");
         String forecastKey = "0c2bd6d3dc5bab9f34330cb6e36dce22";
         String forecastUrl = "https://api.forecast.io/forecast/" + forecastKey + "/" + latitude +"," + longitude;
         if(isNetworkAvailable()) {
+            toggleRefreshView();
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(forecastUrl)
@@ -75,7 +78,13 @@ Log.d(TAG, "Main ui code is running");
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            toggleRefreshView();
+                        }
+                    });
+                    alertUserAboutError();
                 }
 
                 @Override
@@ -96,7 +105,7 @@ Log.d(TAG, "Main ui code is running");
                         }
                     } catch (IOException e) {
                         Log.e(TAG, "Exception caught: ", e);
-                    }catch (JSONException e){
+                    } catch (JSONException e) {
                         Log.e(TAG, "Exception caught: ", e);
                     }
                 }
@@ -107,7 +116,18 @@ Log.d(TAG, "Main ui code is running");
         }
     }
 
+    private void toggleRefreshView() {
+        if (mProgressBar.getVisibility() == View.VISIBLE){
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mRefreshView.setVisibility(View.VISIBLE);
+        }else {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mRefreshView.setVisibility(View.INVISIBLE);
+        }
+    }
+
     private void updateDisplay() {
+        toggleRefreshView();
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
         mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
