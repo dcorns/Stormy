@@ -1,17 +1,14 @@
 package com.dalecorns.stormy;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private CurrentWeather mCurrentWeather;
     private TextView mTemperatureLabel;
     @Bind(R.id.timeLabel) TextView mTimeLabel;
-    @Bind(R.id.locationLabel) TextView mLocationLabel;
-    @Bind(R.id.humidityLabel) TextView mHumidityLabel;
-    @Bind(R.id.precipLabel) TextView mPrecipLabel;
+    @Bind(R.id.humidityValue) TextView mHumidityValue;
+    @Bind(R.id.precipValue) TextView mPrecipValue;
     @Bind(R.id.summaryLabel) TextView mSummaryLabel;
+    @Bind(R.id.iconImageView) ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                         Log.v(TAG, data);
                         if (response.isSuccessful()) {
                             mCurrentWeather = getCurrentDetails(data);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateDisplay();
+                                }
+                            });
                         } else {
                             alertUserAboutError();
                         }
@@ -84,6 +87,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.network_unavailable_message, Toast.LENGTH_LONG).show();
         }
 Log.d(TAG, "Main ui code is running");
+    }
+
+    private void updateDisplay() {
+        mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "");
+        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
+        mSummaryLabel.setText(mCurrentWeather.getSummary());
+        mTimeLabel.setText("At " + mCurrentWeather.getFormattedTime() + " it will be");
+        //Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId()); //getResources().getDrawable is depreciated.
+        Drawable drawable = ContextCompat.getDrawable(this, mCurrentWeather.getIconId());
+        mImageView.setImageDrawable(drawable);
     }
 
     private CurrentWeather getCurrentDetails(String data) throws JSONException{
