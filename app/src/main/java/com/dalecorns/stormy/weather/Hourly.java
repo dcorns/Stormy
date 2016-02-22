@@ -7,7 +7,7 @@ public class Hourly {
     private long mTime;
     private String mSummary;
     private double mTemperature;
-    private String mIcom;
+    private String mIcon;
     private String mTimeZone;
 
     public long getTime() {
@@ -34,12 +34,12 @@ public class Hourly {
         mTemperature = temperature;
     }
 
-    public String getIcom() {
-        return mIcom;
+    public String getIcon() {
+        return mIcon;
     }
 
-    public void setIcom(String icom) {
-        mIcom = icom;
+    public void setIcon(String icon) {
+        mIcon = icon;
     }
 
     public String getTimeZone() {
