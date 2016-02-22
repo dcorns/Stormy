@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.dalecorns.stormy.R;
 import com.dalecorns.stormy.weather.Current;
+import com.dalecorns.stormy.weather.Forecast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-    private Current mCurrent;
+    private Forecast mForecast;
     private TextView mTemperatureLabel;
     @Bind(R.id.timeLabel) TextView mTimeLabel;
     @Bind(R.id.humidityValue) TextView mHumidityValue;
@@ -95,7 +96,7 @@ Log.d(TAG, "Main ui code is running");
                         String data = response.body().string();
                         Log.v(TAG, data);
                         if (response.isSuccessful()) {
-                            mCurrent = getCurrentDetails(data);
+                            mForecast = parseForecastDetails(data);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -130,14 +131,21 @@ Log.d(TAG, "Main ui code is running");
 
     private void updateDisplay() {
         toggleRefreshView();
-        mTemperatureLabel.setText(mCurrent.getTemperature() + "");
-        mHumidityValue.setText(mCurrent.getHumidity() + "");
-        mPrecipValue.setText(mCurrent.getPrecipChance() + "%");
-        mSummaryLabel.setText(mCurrent.getSummary());
-        mTimeLabel.setText("At " + mCurrent.getFormattedTime() + " it will be");
+        Current current = mForecast.getCurrent();
+        mTemperatureLabel.setText(current.getTemperature() + "");
+        mHumidityValue.setText(current.getHumidity() + "");
+        mPrecipValue.setText(current.getPrecipChance() + "%");
+        mSummaryLabel.setText(current.getSummary());
+        mTimeLabel.setText("At " + current.getFormattedTime() + " it will be");
         //Drawable drawable = getResources().getDrawable(mCurrent.getIconId()); //getResources().getDrawable is depreciated.
-        Drawable drawable = ContextCompat.getDrawable(this, mCurrent.getIconId());
+        Drawable drawable = ContextCompat.getDrawable(this, current.getIconId());
         mIconImageView.setImageDrawable(drawable);
+    }
+
+    private Forecast parseForecastDetails(String jsonData) throws JSONException{
+        Forecast forecast = new Forecast();
+        forecast.setCurrent(getCurrentDetails(jsonData));
+        return forecast;
     }
 
     private Current getCurrentDetails(String data) throws JSONException{
