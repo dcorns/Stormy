@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="#FC970B">
+    android:background="@drawable/bg_gradient">
 
     <TextView
         android:layout_width="wrap_content"
@@ -160,7 +160,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/linearLayout"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true">
 
         <Button
             android:layout_width="match_parent"
@@ -181,7 +182,8 @@
             android:id="@+id/dailyButton"
             android:layout_weight="1"
             android:textColor="#FFFFFF"
-            android:background="#40FFFFFF"/>
+            android:background="#40FFFFFF"
+            android:layout_marginLeft="2dp"/>
     </LinearLayout>
 
 </RelativeLayout>
