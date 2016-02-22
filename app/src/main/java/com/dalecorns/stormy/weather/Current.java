@@ -31,40 +31,7 @@ public class Current {
     }
 
     public int getIconId(){
-        int iconId;
-        switch (mIcon){
-            case "clear-day": iconId = R.drawable.clear_day;
-                break;
-            case "clear-night": iconId = R.drawable.clear_night;
-                break;
-            case "rain": iconId = R.drawable.rain;
-                break;
-            case "snow": iconId = R.drawable.snow;
-                break;
-            case "sleet": iconId = R.drawable.sleet;
-                break;
-            case "wind": iconId = R.drawable.wind;
-                break;
-            case "fog": iconId = R.drawable.fog;
-                break;
-            case "cloudy": iconId = R.drawable.cloudy;
-                break;
-            case "partly-cloudy-day": iconId = R.drawable.partly_cloudy;
-                break;
-            case "partly-cloudy-night": iconId = R.drawable.partly_cloudy;
-                break;
-            case "hail": iconId = R.drawable.sleet;
-                break;
-            case "thunderstorm": iconId = R.drawable.cloudy_night;
-                break;
-            case "tornado": iconId = R.drawable.wind;
-                break;
-            default: iconId = R.drawable.clear_day;
-                break;
-
-        }
-
-        return iconId;
+        return Forecast.getIconId(mIcon);
     }
 
     public void setIcon(String icon) {

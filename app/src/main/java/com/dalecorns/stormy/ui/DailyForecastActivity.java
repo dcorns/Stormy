@@ -10,16 +10,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import com.dalecorns.stormy.R;
+import com.dalecorns.stormy.adapters.DayAdapter;
+import com.dalecorns.stormy.weather.Daily;
 
 public class DailyForecastActivity extends ListActivity {
 
+    private Daily[] mDays;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_forecast);
-        String[] stooges = {"Larry", "Moe", "Curly"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, stooges);
-        setListAdapter(adapter);
+        DayAdapter dayAdapter = new DayAdapter(this, mDays);
     }
 
 }

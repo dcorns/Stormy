@@ -1,5 +1,9 @@
 package com.dalecorns.stormy.weather;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 /**
  * Created by dcorns on 2/13/16.
  */
@@ -26,16 +30,17 @@ public class Daily {
         mSummary = summary;
     }
 
-    public double getHiTemp() {
-        return mHiTemp;
+    public int getHiTemp() {
+        return (int) Math.round(mHiTemp);
     }
 
     public void setHiTemp(double hiTemp) {
         mHiTemp = hiTemp;
     }
 
-    public double getLoTemp() {
-        return mLoTemp;
+    public int getLoTemp() {
+
+        return (int) Math.round(mLoTemp);
     }
 
     public void setLoTemp(double loTemp) {
@@ -56,6 +61,17 @@ public class Daily {
 
     public void setTimeZone(String timeZone) {
         mTimeZone = timeZone;
+    }
+
+    public int getIconId(){
+        return Forecast.getIconId(mIcon);
+    }
+
+    public String getDayOfTheWeek(){
+        SimpleDateFormat formatter =new SimpleDateFormat("EEEE");
+        formatter.setTimeZone(TimeZone.getTimeZone(mTimeZone));
+        Date dateTime = new Date(mTime * 1000);
+        return formatter.format(dateTime);
     }
 
     private String mTimeZone;

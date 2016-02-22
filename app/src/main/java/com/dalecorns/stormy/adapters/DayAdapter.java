@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dalecorns.stormy.R;
 import com.dalecorns.stormy.weather.Daily;
+import com.dalecorns.stormy.weather.Forecast;
 
 /**
  * Created by dcorns on 2/22/16.
@@ -51,7 +52,11 @@ public class DayAdapter extends BaseAdapter{
         else {
             holder = (ViewHolder) convertView.getTag();
         }
-        return null;
+        Daily day = mDays[position];
+        holder.iconImageView.setImageResource(day.getIconId());
+        holder.temperatureLabel.setText(day.getHiTemp() + "");
+        holder.dayLabel.setText(day.getDayOfTheWeek());
+        return convertView;
     }
 
     private static class ViewHolder{
