@@ -93,4 +93,24 @@ public class Daily implements Parcelable{
         dest.writeDouble(mHiTemp);
         dest.writeDouble(mLoTemp);
     }
+    private Daily(Parcel in){
+        //must be in same order as written
+        mTime = in.readLong();
+        mIcon = in.readString();
+        mSummary = in.readString();
+        mTimeZone = in.readString();
+        mHiTemp = in.readDouble();
+        mLoTemp = in.readDouble();
+    }
+    public static final Creator<Daily> CREATOR = new Creator<Daily>() {
+        @Override
+        public Daily createFromParcel(Parcel source) {
+            return new Daily(source);
+        }
+
+        @Override
+        public Daily[] newArray(int size) {
+            return new Daily[size];
+        }
+    }
 }
