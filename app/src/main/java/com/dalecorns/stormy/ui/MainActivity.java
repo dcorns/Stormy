@@ -232,7 +232,7 @@ Log.d(TAG, "Main ui code is running");
     }
     @OnClick(R.id.hourlyButton)
     public void startHourlyActivity(View view){
-        Intent intent new Intent(this, HourlyForecastActivity.class);
+        Intent intent = new Intent(this, HourlyForecastActivity.class);
         intent.putExtra(HOURLY_FORECAST, mForecast.getHourlies());
         startActivity(intent);
     }
