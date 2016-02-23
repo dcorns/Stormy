@@ -102,6 +102,11 @@ public class Daily implements Parcelable{
         mHiTemp = in.readDouble();
         mLoTemp = in.readDouble();
     }
+
+    public Daily(){
+        //Default constructor to enable parsing only so nothing required here
+    }
+
     public static final Creator<Daily> CREATOR = new Creator<Daily>() {
         @Override
         public Daily createFromParcel(Parcel source) {
@@ -112,5 +117,5 @@ public class Daily implements Parcelable{
         public Daily[] newArray(int size) {
             return new Daily[size];
         }
-    }
+    };
 }
