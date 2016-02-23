@@ -31,6 +31,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.dalecorns.stormy.ui.MainActivity"/>
         </activity>
+        <activity android:name=".ui.HourlyForecastActivity">
+        </activity>
     </application>
 
 </manifest>

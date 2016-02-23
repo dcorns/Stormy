@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String DAILY_FORECAST = "DAILY_FORECAST";
+    public static final  String HOURLY_FORECAST = "HOURLY_FORECAST";
     private Forecast mForecast;
     private TextView mTemperatureLabel;
     @Bind(R.id.timeLabel) TextView mTimeLabel;
@@ -227,6 +228,12 @@ Log.d(TAG, "Main ui code is running");
     public void startDailyActivity(View view){
         Intent intent = new Intent(this, DailyForecastActivity.class);
         intent.putExtra(DAILY_FORECAST, mForecast.getDailies());
+        startActivity(intent);
+    }
+    @OnClick(R.id.hourlyButton)
+    public void startHourlyActivity(View view){
+        Intent intent new Intent(this, HourlyForecastActivity.class);
+        intent.putExtra(HOURLY_FORECAST, mForecast.getHourlies());
         startActivity(intent);
     }
 }
